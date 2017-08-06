@@ -1,0 +1,22 @@
+.before-after {
+  display: flex;
+}
+
+.before {
+  margin-right: 50px;
+  width: 310px;
+}
+
+.after {
+  width: 310px;
+}
+
+.full-array {
+  .array-item {
+    display: block;
+    background-color: #dfdfdf;
+  }
+  .array-item:nth-child(2n) {
+    background-color: #f1f1f1;
+  }
+}
