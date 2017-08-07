@@ -5,7 +5,8 @@ import { render } from 'react-dom';
 require("./static/scss/style.scss");
 
 
-import timsort from './components/timsort/timsort.ts';
+import sortBy from 'lodash/sortBy';
+
 //import { javaSort.TimSort } from './components/timsort/java_timsort.ts';
 
 import testArray from './testArray';
@@ -23,18 +24,31 @@ class App extends Component {
         };
     }
 
-    returnBefore() {
-        let quickSortedArray = new quickSort();
-        return quickSortedArray.getSorted(this.state.beforeArray, 0, this.state.beforeArray.length - 1, "id");
+    returnAfter() {
+
+        let qSortArray = new quickSort();
+
+        let t0 = performance.now();
+
+        let result = qSortArray.getSorted(this.state.beforeArray, "first_name");
+
+        let t1 = performance.now();
+        console.log('Took', (t1 - t0).toFixed(4), 'ms with CUSTOM:', result);
     }
 
     componentDidMount() {
         this.setState({
-            afterArray: this.returnBefore()
+            afterArray: this.returnAfter()
         })
     }
 
     render() {
+        return <div>
+            <p>start</p>
+        </div>
+    }
+
+    /*render() {
         let renderForAfret = () => {
             if (this.state.afterArray.length > 0) {
 
@@ -78,7 +92,9 @@ class App extends Component {
                 </div>
             </div>
         );
-    }
+    }*/
+
+
 }
 
 render(<App/>, document.getElementById('app'));
