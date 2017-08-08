@@ -30,7 +30,7 @@ class App extends Component {
 
         let t0 = performance.now();
 
-        let result = qSortArray.getSorted(this.state.beforeArray, "first_name");
+        let result = qSortArray.getSorted(this.state.beforeArray, "id");
 
         let t1 = performance.now();
         console.log('Took', (t1 - t0).toFixed(4), 'ms with CUSTOM:', result);

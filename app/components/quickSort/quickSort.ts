@@ -71,6 +71,11 @@ export default class quickSort {
         "Я": "168",
 
 };
+    maxLen = [
+        {
+            "len": 0
+        }
+    ];
 
     constructor() {
     }
@@ -94,14 +99,21 @@ export default class quickSort {
         return pos;
     }
 
-    private quick_sort(mas: any[], l: number, r: number) {
+    private quick_sort(mas: any[], l: number, r: number, pivot?: number) {
         if (l >= r) {
             return;
         }
-        let pivot: number = quickSort.partition(mas,l,r);
+        if (!pivot) {
+            pivot = quickSort.partition(mas,l,r);
+        }
 
-        this.quick_sort(mas,l,pivot-1);
-        this.quick_sort(mas,pivot+1,r);
+        try {
+            this.quick_sort(mas,l,pivot-1);
+            this.quick_sort(mas,pivot+1,r);
+        } catch (e) {
+            return pivot;
+        }
+
     }
 
     getSorted(array: any[], field: any) {
@@ -113,18 +125,44 @@ export default class quickSort {
         }
 
         let stringTable: any = this.stringTable;
+        let maxLen = this.maxLen;
 
         array.forEach(function(item, i, arr) {
 
-            arr[i]["__sortTMP__"] = item[field].toString().replace(/\s{2,}/g, ' ').replace(/./gi,($0: any)=>stringTable[$0.toUpperCase()]||$0);
+            let itemString: string = item[field].toString();
 
-            arr[i]["__sortTMP__"] = (+arr[i]["__sortTMP__"] * 0.01) + "";
+            if (itemString.length > maxLen[0].len) {
+                maxLen[0].len = itemString.length;
+            }
+
+            mas[i] = item;
+        });
+
+
+        array.forEach(function(item, i, arr) {
+
+            let itemString: string = item[field].toString().replace(/\s{2,}/g, ' ');
+            let bigSize: string;
+
+            if (maxLen[0].len > itemString.length) {
+                let diff = maxLen[0].len - itemString.length;
+                bigSize = itemString  + '0'.repeat(diff)
+            } else if (maxLen[0].len === itemString.length) {
+                bigSize = itemString;
+            }
+
+            arr[i]["__sortTMP__"] = bigSize.replace(/./gi,($0: any)=>stringTable[$0.toUpperCase()]||$0);
+
+
             mas[i] = item;
         });
 
         let l:number = 0;
         let r:number = mas.length - 1;
-        this.quick_sort(mas,l,r);
+        let result = this.quick_sort(mas,l,r);
+        if ( result >= 0) {
+            this.quick_sort(mas,l,r,result)
+        }
 
         return mas;
     }
