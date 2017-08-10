@@ -10,3 +10,9 @@ Took 3.3650 ms with NATIVE! <br>
 # With string:
 Took 10.2450 ms with LODASH! <br>
 Took 7.4900 ms with NATIVE! <br>
+
+
+<br>
+<br>
+import quickSort from "./components/quickSort/quickSort";
+<br>
