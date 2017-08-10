@@ -2,15 +2,10 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-require("./static/scss/style.scss");
-
-
-import timsort from './components/timsort/timsort.ts';
-//import { javaSort.TimSort } from './components/timsort/java_timsort.ts';
+require('./static/scss/style.scss');
 
 import testArray from './testArray';
-//import TimSort from "./components/timsort/java_timsort";
-import quickSort from "./components/quickSort/quickSort";
+import quickSort from './components/quickSort/quickSort';
 
 class App extends Component {
 
@@ -24,8 +19,16 @@ class App extends Component {
     }
 
     returnBefore() {
-        let quickSortedArray = new quickSort();
-        return quickSortedArray.getSorted(this.state.beforeArray, 0, this.state.beforeArray.length - 1, "id");
+        let qSort = new quickSort();
+        let t0 = performance.now();
+
+        let result = qSort.getSorted(this.state.beforeArray, 'first_name ');
+
+        let t1 = performance.now();
+        console.log('Took', (t1 - t0).toFixed(4), 'ms with CUSTOM:', result);
+
+        return result;
+
     }
 
     componentDidMount() {
@@ -41,12 +44,12 @@ class App extends Component {
                 return this.state.afterArray.map((value, i) => {
                     return(
                         <p key={i}>
-                            <span className="array-item">id: {value.id}</span>
-                            <span className="array-item">first_name: "{value.first_name}"</span>
-                            <span className="array-item">last_name: "{value.last_name}"</span>
-                            <span className="array-item">email: "{value.email}"</span>
-                            <span className="array-item">gender: "{value.gender}"</span>
-                            <span className="array-item">ip_address: {value.ip_address}</span>
+                            <span className='array-item'>id: {value.id}</span>
+                            <span className='array-item'>first_name: '{value.first_name}'</span>
+                            <span className='array-item'>last_name: '{value.last_name}'</span>
+                            <span className='array-item'>email: '{value.email}'</span>
+                            <span className='array-item'>gender: '{value.gender}'</span>
+                            <span className='array-item'>ip_address: {value.ip_address}</span>
                         </p>
                     )
                 })
@@ -57,23 +60,23 @@ class App extends Component {
         };
 
         return (
-            <div className="before-after">
-                <div className="before full-array">
+            <div className='before-after'>
+                <div className='before full-array'>
                     {this.state.beforeArray.map((value, i) => {
                         return(
                             <p key={i}>
-                                <span className="array-item">id: {value.id}</span>
-                                <span className="array-item">first_name: "{value.first_name}"</span>
-                                <span className="array-item">last_name: "{value.last_name}"</span>
-                                <span className="array-item">email: "{value.email}"</span>
-                                <span className="array-item">gender: "{value.gender}"</span>
-                                <span className="array-item">ip_address: {value.ip_address}</span>
+                                <span className='array-item'>id: {value.id}</span>
+                                <span className='array-item'>first_name: '{value.first_name}'</span>
+                                <span className='array-item'>last_name: '{value.last_name}'</span>
+                                <span className='array-item'>email: '{value.email}'</span>
+                                <span className='array-item'>gender: '{value.gender}'</span>
+                                <span className='array-item'>ip_address: {value.ip_address}</span>
                             </p>
                         )}
                     )}
                 </div>
 
-                <div className="after full-array">
+                <div className='after full-array'>
                     {renderForAfret()}
                 </div>
             </div>
